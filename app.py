@@ -5,9 +5,22 @@ from flask import Flask, render_template, request, jsonify
 import sqlite3
 import json
 import math
+import os
 
 app = Flask(__name__)
-DB_PATH = "courses.db"
+
+def _find_db():
+    candidates = [
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), "courses.db"),
+        os.path.join(os.getcwd(), "courses.db"),
+        "/var/task/courses.db",
+    ]
+    for p in candidates:
+        if os.path.exists(p):
+            return p
+    return candidates[0]
+
+DB_PATH = _find_db()
 
 SCHOLARSHIPS = [
     {
