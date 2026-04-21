@@ -10,10 +10,11 @@ import os
 app = Flask(__name__)
 
 DB_URL = os.environ.get("DB_URL", "")
-DB_PATH = "/tmp/courses.db"
+_local_db = os.path.join(os.path.dirname(os.path.abspath(__file__)), "courses.db")
+DB_PATH = "/tmp/courses.db" if DB_URL else _local_db
 
 def ensure_db():
-    if not os.path.exists(DB_PATH) and DB_URL:
+    if DB_URL and not os.path.exists(DB_PATH):
         import urllib.request
         urllib.request.urlretrieve(DB_URL, DB_PATH)
 
