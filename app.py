@@ -9,18 +9,13 @@ import os
 
 app = Flask(__name__)
 
-def _find_db():
-    candidates = [
-        os.path.join(os.path.dirname(os.path.abspath(__file__)), "courses.db"),
-        os.path.join(os.getcwd(), "courses.db"),
-        "/var/task/courses.db",
-    ]
-    for p in candidates:
-        if os.path.exists(p):
-            return p
-    return candidates[0]
+DB_URL = os.environ.get("DB_URL", "")
+DB_PATH = "/tmp/courses.db"
 
-DB_PATH = _find_db()
+def ensure_db():
+    if not os.path.exists(DB_PATH) and DB_URL:
+        import urllib.request
+        urllib.request.urlretrieve(DB_URL, DB_PATH)
 
 SCHOLARSHIPS = [
     {
@@ -127,6 +122,7 @@ SCHOLARSHIPS = [
 
 
 def get_db():
+    ensure_db()
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     return conn
