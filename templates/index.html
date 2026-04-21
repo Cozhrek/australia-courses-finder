@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RACC Indonesia - Australia Study Search</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <span class="logo-au">🇦🇺</span>
+        <span class="logo-text">RACC Indonesia<span class="logo-dot"> — Australia Study Search</span></span>
+      </a>
+      <nav class="nav">
+        <a href="#courses" class="nav-link active" data-tab="courses">Courses</a>
+        <a href="#scholarships" class="nav-link" data-tab="scholarships">Scholarships</a>
+        <a href="#about" class="nav-link" data-tab="about">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1 class="hero-title">Find Your Course in Australia</h1>
+      <p class="hero-subtitle">by RACC Indonesia — Search 26,000+ CRICOS-registered courses from 1,500+ institutions across Australia</p>
+
+      <!-- Main Search Bar -->
+      <div class="search-wrapper">
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="searchInput" class="search-input"
+                 placeholder="Search courses, universities, fields of study..."
+                 autocomplete="off" spellcheck="false">
+          <button class="search-btn" id="searchBtn">Search</button>
+        </div>
+        <div id="searchSuggestions" class="suggestions-box hidden"></div>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="stats-bar" id="statsBar">
+        <div class="stat-item"><span class="stat-num" id="statCourses">—</span><span class="stat-label">Active Courses</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat-item"><span class="stat-num" id="statInst">—</span><span class="stat-label">Institutions</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat-item"><span class="stat-num" id="statStates">—</span><span class="stat-label">States</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat-item"><span class="stat-num" id="statScholarships">—</span><span class="stat-label">Scholarships</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="main-content">
+
+    <!-- COURSES TAB -->
+    <section class="tab-section active" id="tab-courses">
+      <!-- Filters -->
+      <div class="filters-row">
+        <div class="filter-group">
+          <label class="filter-label">Course Level</label>
+          <select id="filterLevel" class="filter-select">
+            <option value="">All Levels</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label">Field of Study</label>
+          <select id="filterField" class="filter-select">
+            <option value="">All Fields</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label">State / Territory</label>
+          <select id="filterState" class="filter-select">
+            <option value="">All States</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label">Max Total Cost (AUD)</label>
+          <select id="filterMaxFee" class="filter-select">
+            <option value="">Any Cost</option>
+            <option value="10000">Under $10,000</option>
+            <option value="20000">Under $20,000</option>
+            <option value="40000">Under $40,000</option>
+            <option value="80000">Under $80,000</option>
+            <option value="150000">Under $150,000</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label">Study Duration</label>
+          <select id="filterDuration" class="filter-select">
+            <option value="">Any Duration</option>
+            <option value="0,52">Under 1 year</option>
+            <option value="52,104">1 – 2 years</option>
+            <option value="104,156">2 – 3 years</option>
+            <option value="156,999">3+ years</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label">Status</label>
+          <select id="filterExpired" class="filter-select">
+            <option value="No">Active Only</option>
+            <option value="">All (incl. Expired)</option>
+            <option value="Yes">Expired Only</option>
+          </select>
+        </div>
+        <button class="clear-filters-btn" id="clearFilters">Clear Filters</button>
+      </div>
+
+      <!-- Results -->
+      <div class="results-section">
+        <div class="results-header" id="resultsHeader"></div>
+        <div class="results-grid" id="resultsGrid">
+          <div class="initial-state">
+            <div class="initial-icon">🎓</div>
+            <h3>Search for a course above</h3>
+            <p>Or use the filters to browse courses by level, field, or location</p>
+            <div class="quick-searches">
+              <span class="quick-label">Try:</span>
+              <button class="quick-btn" data-q="nursing">Nursing</button>
+              <button class="quick-btn" data-q="business management">Business Management</button>
+              <button class="quick-btn" data-q="information technology">IT</button>
+              <button class="quick-btn" data-q="engineering">Engineering</button>
+              <button class="quick-btn" data-q="hospitality">Hospitality</button>
+            </div>
+          </div>
+        </div>
+        <div class="pagination" id="pagination"></div>
+      </div>
+    </section>
+
+    <!-- SCHOLARSHIPS TAB -->
+    <section class="tab-section" id="tab-scholarships">
+      <div class="scholarships-header">
+        <h2>Australian Study Scholarships</h2>
+        <p class="scholarships-subtitle">These scholarships are <strong>not included</strong> in the CRICOS database — they are sourced separately to help you find funding opportunities.</p>
+        <div class="scholarship-search-row">
+          <input type="text" id="scholarshipSearch" class="scholarship-search-input"
+                 placeholder="Search scholarships by name, keyword, or tag..." />
+          <select id="scholarshipLevelFilter" class="filter-select">
+            <option value="">All Levels</option>
+          </select>
+        </div>
+      </div>
+      <div class="scholarships-grid" id="scholarshipsGrid"></div>
+    </section>
+
+    <!-- ABOUT TAB -->
+    <section class="tab-section" id="tab-about">
+      <div class="about-content">
+        <h2>About AuStudyFinder</h2>
+        <div class="about-grid">
+          <div class="about-card">
+            <div class="about-icon">📊</div>
+            <h3>Data Source</h3>
+            <p>Course data is sourced from the <strong>CRICOS (Commonwealth Register of Institutions and Courses for Overseas Students)</strong> — the official Australian Government registry. Last updated: March 2, 2026.</p>
+          </div>
+          <div class="about-card">
+            <div class="about-icon">🔍</div>
+            <h3>How to Search</h3>
+            <p>Type any course name, institution name, or field of study in the search bar. Use filters to narrow by course level, state, or budget. Results show active courses by default.</p>
+          </div>
+          <div class="about-card">
+            <div class="about-icon">🎓</div>
+            <h3>Scholarships</h3>
+            <p>The Scholarships tab lists major Australian and international scholarships not included in the CRICOS database. Each entry includes eligibility, value, and official links.</p>
+          </div>
+          <div class="about-card">
+            <div class="about-icon">💡</div>
+            <h3>Tips</h3>
+            <ul>
+              <li>CRICOS codes starting with <strong>0</strong> are often universities</li>
+              <li>Check <strong>Work Component</strong> to find courses with practical training</li>
+              <li><strong>Dual Qualification</strong> courses lead to two qualifications simultaneously</li>
+              <li>Costs shown are <em>estimated total course cost</em> for international students</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="about-links">
+          <h3>Useful Official Links</h3>
+          <div class="links-grid">
+            <a href="https://cricos.education.gov.au/" target="_blank" class="ext-link">CRICOS Official Registry</a>
+            <a href="https://www.studyaustralia.gov.au/" target="_blank" class="ext-link">Study Australia (Govt)</a>
+            <a href="https://www.australiaawards.gov.au/" target="_blank" class="ext-link">Australia Awards</a>
+            <a href="https://www.homeaffairs.gov.au/trav/stud" target="_blank" class="ext-link">Student Visa Info</a>
+            <a href="https://www.ielts.org/" target="_blank" class="ext-link">IELTS</a>
+            <a href="https://www.toefl.org/" target="_blank" class="ext-link">TOEFL</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Course Detail Modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="courseModal">
+      <button class="modal-close" id="modalClose">✕</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>Data source: CRICOS — Australian Government. For official information visit <a href="https://cricos.education.gov.au/" target="_blank">cricos.education.gov.au</a></p>
+  </footer>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

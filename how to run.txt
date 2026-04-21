@@ -1,0 +1,4 @@
+cd "C:\Users\putra\OneDrive\Documents\1.Claude\RACC Indonesia\Australia Courses Apps"
+python app.py
+
+open: http://localhost:5000
