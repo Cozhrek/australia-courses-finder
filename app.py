@@ -522,6 +522,18 @@ def stats():
     })
 
 
+@app.route("/api/debug")
+def debug():
+    db_exists = os.path.exists(DB_PATH)
+    db_size = os.path.getsize(DB_PATH) if db_exists else 0
+    return jsonify({
+        "db_url": DB_URL or "NOT SET",
+        "db_path": DB_PATH,
+        "db_exists": db_exists,
+        "db_size_mb": round(db_size / 1024 / 1024, 2),
+    })
+
+
 if __name__ == "__main__":
     import os
     if not os.path.exists(DB_PATH):
